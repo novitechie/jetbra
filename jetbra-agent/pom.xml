@@ -47,6 +47,7 @@
                             <Can-Retransform-Classes>true</Can-Retransform-Classes>
                         </manifestEntries>
                     </archive>
+                    <finalName>jetbra-agent</finalName>
                 </configuration>
                 <executions>
                     <execution>

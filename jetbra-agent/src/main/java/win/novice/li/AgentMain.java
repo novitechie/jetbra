@@ -13,7 +13,7 @@ public class AgentMain {
         AgentBuilder agentBuilder = newAgentBuilder();
         agentBuilder.type(ElementMatchers.named("java.security.cert.PKIXBuilderParameters"))
                 .transform((builder, typeDescription, classLoader, module, protectionDomain) -> builder
-                        .visit(Advice.to(PKIXBuilderParameters.class)
+                        .visit(Advice.to(PKIXBuilderParametersAdvice.class)
                                 .on(ElementMatchers.isConstructor().and(ElementMatchers.takesArgument(0, Set.class)))))
                 .asTerminalTransformation()
                 .type(ElementMatchers.named("sun.net.www.http.HttpClient"))
