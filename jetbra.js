@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JetBra
 // @namespace    https://github.com/novice88/jetbra
-// @version      0.2
+// @version      1.1
 // @license MIT
 // @description  添加一个按钮,点击获取插件的激活码
 // @author       novice.li
@@ -197,7 +197,6 @@ var elmGetter = function() {
         }
     };
 }();
-
 (async function () {
     'use strict';
     GM_addStyle(`
@@ -227,6 +226,7 @@ var elmGetter = function() {
     const pluginId = metaTag.getAttribute('content')
 
     let pluginDetail = await fetch('https://plugins.jetbrains.com/api/plugins/' + pluginId).then(r => r.json());
+
     const parentElement = await elmGetter.get('.plugin-header__controls-panel > div:first-child');
 
     let newElement = document.createElement('div');
@@ -271,6 +271,5 @@ var elmGetter = function() {
                 window.alert('激活码已复制到剪切版');
             }
         });
-
     })
 })();
