@@ -41,9 +41,5 @@
             <source>${project.parent.basedir}/jetbra-agent/target/jetbra-agent.jar</source>
             <destName>jetbra-agent.jar</destName>
         </file>
-        <file>
-            <source>${project.parent.basedir}/readme.md</source>
-            <destName>readme.md</destName>
-        </file>
     </files>
 </assembly>
