@@ -17,6 +17,7 @@
 	<modules>
 		<module>jetbra-agent</module>
 		<module>jetbra-server</module>
+		<module>jetbra-dist</module>
 	</modules>
 	<properties>
 		<java.version>17</java.version>
