@@ -73,7 +73,7 @@ public class LicenseController {
 
     @SneakyThrows
     static PrivateKey getPrivateKey() {
-        ClassPathResource licenseKeyResource = new ClassPathResource("jetbra.key");
+        ClassPathResource licenseKeyResource = new ClassPathResource("jetbra.pem");
         Security.addProvider(new BouncyCastleProvider());
         PEMParser pemParser = new PEMParser(new InputStreamReader(licenseKeyResource.getInputStream()));
         JcaPEMKeyConverter converter = new JcaPEMKeyConverter().setProvider("BC");
