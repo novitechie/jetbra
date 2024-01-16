@@ -5,3 +5,8 @@
 
 
 新增[油猴脚本](https://greasyfork.org/zh-CN/scripts/480799-jetbra), 使用这个脚本可以生成插件的激活码,需配合该工具使用
+
+
+todo
+
+- [ ] 禁止连接某些ip(restful-fast-request--api-buddy等插件不仅会在本地验证icense还会将激活密钥发往他们自己的服务器进行验证)
