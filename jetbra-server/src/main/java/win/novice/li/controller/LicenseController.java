@@ -13,14 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import win.novice.li.model.License;
 
-import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -33,15 +31,12 @@ public class LicenseController {
     @PostMapping("/generateLicense")
     @SneakyThrows
     public Map<String, Object> generateLicense(@RequestBody @Validated License license) {
-        Map<String, Object> ans = new HashMap<>();
-
         String licenseId = generateLicenseId();
         license.setLicenseId(licenseId);
 
         String licensePart = MAPPER.writeValueAsString(license);
         byte[] licensePartBytes = licensePart.getBytes(StandardCharsets.UTF_8);
         String licensePartBase64 = Base64.getEncoder().encodeToString(licensePartBytes);
-
 
         Signature signature = Signature.getInstance("SHA1withRSA");
         signature.initSign(PRIVATE_KEY);
@@ -51,8 +46,7 @@ public class LicenseController {
 
         String result = licenseId + "-" + licensePartBase64 + "-" + sigResultsBase64 + "-" + Base64.getEncoder().encodeToString(CRT.getEncoded());
 
-        ans.put("license",result);
-        return ans;
+        return Map.of("license", result);
     }
 
 

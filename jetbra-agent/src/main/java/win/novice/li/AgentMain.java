@@ -21,11 +21,19 @@ public class AgentMain {
                         .visit(Advice.to(HttpClientAdvice.class)
                                 .on(ElementMatchers.named("openServer"))))
                 .asTerminalTransformation()
+
                 .type(ElementMatchers.named("java.lang.System"))
                 .transform((builder, typeDescription, classLoader, module, protectionDomain) -> builder
                         .visit(Advice.to(SystemAdvice.class)
                                 .on(ElementMatchers.named("getProperty"))))
                 .asTerminalTransformation()
+
+                .type(ElementMatchers.named("java.net.Socket"))
+                .transform((builder, typeDescription, classLoader, module, protectionDomain) -> builder
+                        .visit(Advice.to(SocketAdvice.class)
+                                .on(ElementMatchers.named("connect"))))
+                .asTerminalTransformation()
+
                 .installOn(inst);
 
         agentBuilder.installOn(inst);
