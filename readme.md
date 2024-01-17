@@ -9,4 +9,4 @@
 
 todo
 
-- [ ] 禁止连接某些ip(restful-fast-request--api-buddy等插件不仅会在本地验证icense还会将激活密钥发往他们自己的服务器进行验证)
+- [ ] 禁止连接某些ip(restful-fast-request--api-buddy等插件不仅会在本地验证license还会将license发往他们自己的服务器进行验证)
