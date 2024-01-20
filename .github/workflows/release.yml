@@ -42,6 +42,9 @@ jobs:
           # Delete the release
           curl -X DELETE -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/releases/${RELEASE_ID}"
 
+      - name: xxx
+        run: |
+          ls -l
       - name: Set up Git
         run: |
           git config user.email "novice88@users.noreply.github.com"
