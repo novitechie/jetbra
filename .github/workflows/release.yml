@@ -24,6 +24,8 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Check Latest Release
         id: check_latest_release
