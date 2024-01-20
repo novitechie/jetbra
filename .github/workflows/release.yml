@@ -42,6 +42,21 @@ jobs:
           # Delete the release
           curl -X DELETE -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/releases/${RELEASE_ID}"
 
+      - name: Set up Git
+        run: |
+          git config user.email "${{ GITHUB_ACTOR }}@users.noreply.github.com"
+          git config user.name "${{ GITHUB_ACTOR }}"
+
+      - name: Create Tag
+        run: git tag -a v${{ github.run_number }} -m "Release version v${{ github.run_number }}"
+
+      - name: Push Tag
+        run: git push origin v${{ github.run_number }}
+
+      - name: ls
+        run: |
+          ls -l 
+
       - name: Create Release
         id: create_release
         uses: ncipollo/release-action@v1
