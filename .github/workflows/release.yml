@@ -2,8 +2,8 @@ name: Maven Build and Release
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - '*'
 
 jobs:
   build:
@@ -21,11 +21,9 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean package
-
   release:
     needs: build
     runs-on: ubuntu-latest
-
     steps:
       - name: Check Latest Release
         id: check_latest_release
