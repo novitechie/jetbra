@@ -6,9 +6,10 @@ on:
       - main
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -21,12 +22,7 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean package
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
+
       - name: Check Latest Release
         id: check_latest_release
         run: |
