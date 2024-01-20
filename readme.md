@@ -19,5 +19,5 @@ EQUAL,55225648167853313963797564236788620375823669548347220922774310709827403911
 For plugins, it is impossible for me to generate an activation code for each paid plugin, so I developed an
 [tampermonkey script](https://greasyfork.org/zh-CN/scripts/480799-jetbra). You only need to install this script to generate an activation code by clicking on the plugin homepage.
 
-
+![example](https://greasyfork.s3.us-east-2.amazonaws.com/8aelgj5be9clyljja97c4mq3rjcg)
 
