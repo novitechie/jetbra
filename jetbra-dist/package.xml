@@ -41,5 +41,9 @@
             <source>${project.parent.basedir}/jetbra-agent/target/jetbra-agent.jar</source>
             <destName>jetbra-agent.jar</destName>
         </file>
+        <file>
+            <source>${project.parent.basedir}/block_url_keywords</source>
+            <destName>block_url_keywords</destName>
+        </file>
     </files>
 </assembly>

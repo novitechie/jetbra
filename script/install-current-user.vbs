@@ -45,7 +45,7 @@ Sub ProcessVmOptions(ByVal file)
     Loop
     oFile.Close
 
-    sNewContent = sNewContent & "-javaagent:" & sJarFile & "=jetbrains"
+    sNewContent = sNewContent & "-javaagent:" & sJarFile
     Set oFile = oFS.OpenTextFile(file, 2, 0)
     oFile.Write sNewContent
     oFile.Close
