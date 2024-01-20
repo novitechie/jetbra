@@ -2,8 +2,8 @@ name: Maven Build and Release
 
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - main
 
 jobs:
   build:
