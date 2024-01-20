@@ -56,7 +56,7 @@ for PRD in $JB_PRODUCTS; do
     sed -i '/^\-javaagent:.*[\/\\]jetbra\-agent\.jar.*/d' "${VM_FILE_PATH}"
   fi
 
-  echo "-javaagent:${JAR_FILE_PATH}=jetbrains" >>"${VM_FILE_PATH}"
+  echo "-javaagent:${JAR_FILE_PATH}" >>"${VM_FILE_PATH}"
 
   ENV_NAME=$(echo $PRD | tr '[a-z]' '[A-Z]')"_VM_OPTIONS"
   echo "export ${ENV_NAME}=\"${VM_FILE_PATH}\"" >>"${MY_VMOPTIONS_SHELL_FILE}"

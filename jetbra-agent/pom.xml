@@ -13,8 +13,8 @@
     <artifactId>jetbra-agent</artifactId>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
@@ -28,6 +28,13 @@
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy-agent</artifactId>
             <version>1.14.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>3.3.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

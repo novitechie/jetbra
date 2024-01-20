@@ -11,27 +11,24 @@ public class AgentMain {
     public static void premain(String agentArgs, Instrumentation inst) throws Exception {
         printLogo();
         AgentBuilder agentBuilder = newAgentBuilder();
-        agentBuilder.type(ElementMatchers.named("java.security.cert.PKIXBuilderParameters"))
+        agentBuilder
+                .type(ElementMatchers.named("java.security.cert.PKIXBuilderParameters"))
                 .transform((builder, typeDescription, classLoader, module, protectionDomain) -> builder
                         .visit(Advice.to(PKIXBuilderParametersAdvice.class)
                                 .on(ElementMatchers.isConstructor().and(ElementMatchers.takesArgument(0, Set.class)))))
                 .asTerminalTransformation()
+
+
                 .type(ElementMatchers.named("sun.net.www.http.HttpClient"))
                 .transform((builder, typeDescription, classLoader, module, protectionDomain) -> builder
                         .visit(Advice.to(HttpClientAdvice.class)
-                                .on(ElementMatchers.named("openServer"))))
+                                .on(ElementMatchers.named("openServer").and(ElementMatchers.takesArgument(0, String.class)))))
                 .asTerminalTransformation()
 
                 .type(ElementMatchers.named("java.lang.System"))
                 .transform((builder, typeDescription, classLoader, module, protectionDomain) -> builder
                         .visit(Advice.to(SystemAdvice.class)
                                 .on(ElementMatchers.named("getProperty"))))
-                .asTerminalTransformation()
-
-                .type(ElementMatchers.named("java.net.Socket"))
-                .transform((builder, typeDescription, classLoader, module, protectionDomain) -> builder
-                        .visit(Advice.to(SocketAdvice.class)
-                                .on(ElementMatchers.named("connect"))))
                 .asTerminalTransformation()
 
                 .installOn(inst);

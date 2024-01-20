@@ -19,6 +19,7 @@ import java.security.*;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.Map;
 
 @RestController
@@ -45,8 +46,7 @@ public class LicenseController {
         String sigResultsBase64 = Base64.getEncoder().encodeToString(signatureBytes);
 
         String result = licenseId + "-" + licensePartBase64 + "-" + sigResultsBase64 + "-" + Base64.getEncoder().encodeToString(CRT.getEncoded());
-
-        return Map.of("license", result);
+        return Collections.singletonMap("license", result);
     }
 
 
