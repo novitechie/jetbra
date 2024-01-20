@@ -1,0 +1,61 @@
+name: Maven Build and Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '8'
+
+      - name: Build with Maven
+        run: mvn clean package
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check Latest Release
+        id: check_latest_release
+        run: |
+          LATEST_RELEASE=$(curl -s "https://api.github.com/repos/${{ github.repository }}/releases/latest" | jq -r .id)
+          echo "::set-output name=latest_release::$LATEST_RELEASE"
+
+      - name: Delete Previous Release
+        if: steps.check_latest_release.outputs.latest_release != 'null'
+        run: |
+          # Get the latest release ID
+          RELEASE_ID=$(curl -s "https://api.github.com/repos/${{ github.repository }}/releases/latest" | jq -r .id)
+          
+          # Delete the release
+          curl -X DELETE -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/releases/${RELEASE_ID}"
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.sha }}
+          release_name: Release ${{ github.sha }}
+          draft: false
+          prerelease: false
+
+      - name: Upload ZIP to Release
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./jetbra-dist/target/jetbra-all.zip
+          asset_name: jetbra-all.zip
+          asset_content_type: application/zip
