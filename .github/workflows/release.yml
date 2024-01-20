@@ -44,14 +44,14 @@ jobs:
           git config user.name "novice88"
 
       - name: Create Tag
-        run: git tag -a ${{ github.workflow }} -m "Release version ${{ github.workflow }}"
+        run: git tag -a v${{ github.run_number }} -m "Release version v${{ github.run_number }}"
 
       - name: Push Tag
-        run: git push origin ${{ github.workflow }}
+        run: git push origin v${{ github.run_number }}
 
       - name: Create Release
         id: create_release
         uses: ncipollo/release-action@v1
         with:
           artifacts: "jetbra-dist/target/jetbra-all.zip"
-          tag: ${{ github.workflow }}
+          tag: v${{ github.run_number }}
