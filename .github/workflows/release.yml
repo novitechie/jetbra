@@ -44,18 +44,6 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: ncipollo/release-action@v1
         with:
-          tag_name: ${{ github.sha }}
-          release_name: Release ${{ github.sha }}
-          draft: false
-          prerelease: false
-
-      - name: Upload ZIP to Release
-        id: upload_release_asset
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./jetbra-dist/target/jetbra-all.zip
-          asset_name: jetbra-all.zip
-          asset_content_type: application/zip
+          artifacts: "jetbra-dist/target/jetbra-all.zip"
