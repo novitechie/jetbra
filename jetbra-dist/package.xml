@@ -9,28 +9,21 @@
     <fileSets>
         <fileSet>
             <directory>${project.parent.basedir}/script</directory>
-            <outputDirectory>script</outputDirectory>
+            <outputDirectory>jetbra/script</outputDirectory>
             <includes>
                 <include>*</include>
             </includes>
         </fileSet>
         <fileSet>
             <directory>${project.parent.basedir}/vmoptions</directory>
-            <outputDirectory>vmoptions</outputDirectory>
+            <outputDirectory>jetbra/vmoptions</outputDirectory>
             <includes>
                 <include>*</include>
             </includes>
         </fileSet>
         <fileSet>
             <directory>${project.parent.basedir}/trust-crt</directory>
-            <outputDirectory>trust-crt</outputDirectory>
-            <includes>
-                <include>*</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>${project.parent.basedir}/trust-crt</directory>
-            <outputDirectory>trust-crt</outputDirectory>
+            <outputDirectory>jetbra/trust-crt</outputDirectory>
             <includes>
                 <include>*</include>
             </includes>
@@ -39,11 +32,11 @@
     <files>
         <file>
             <source>${project.parent.basedir}/jetbra-agent/target/jetbra-agent.jar</source>
-            <destName>jetbra-agent.jar</destName>
+            <destName>jetbra/jetbra-agent.jar</destName>
         </file>
         <file>
             <source>${project.parent.basedir}/block_url_keywords</source>
-            <destName>block_url_keywords</destName>
+            <destName>jetbra/block_url_keywords</destName>
         </file>
     </files>
 </assembly>
