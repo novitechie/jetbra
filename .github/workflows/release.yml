@@ -38,26 +38,20 @@ jobs:
           # Delete the release
           curl -X DELETE -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/releases/${RELEASE_ID}"
 
-      - name: xxx
-        run: |
-          ls -l
       - name: Set up Git
         run: |
           git config user.email "novice88@users.noreply.github.com"
           git config user.name "novice88"
 
       - name: Create Tag
-        run: git tag -a v${{ github.run_number }} -m "Release version v${{ github.run_number }}"
+        run: git tag -a ${{ github.workflow }} -m "Release version ${{ github.workflow }}"
 
       - name: Push Tag
-        run: git push origin v${{ github.run_number }}
-
-      - name: ls
-        run: |
-          ls -l 
+        run: git push origin ${{ github.workflow }}
 
       - name: Create Release
         id: create_release
         uses: ncipollo/release-action@v1
         with:
           artifacts: "jetbra-dist/target/jetbra-all.zip"
+          tag: ${{ github.workflow }}
