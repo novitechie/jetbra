@@ -10,4 +10,7 @@ An activation tool for jetbrains family products,including plugins
 3. Log in again to load environment variables
 4. Go to the web page to get the activation code and activate the software
 
+# Notice
+
+
 
