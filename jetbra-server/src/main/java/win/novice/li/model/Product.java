@@ -12,9 +12,9 @@ public class Product {
     @NotBlank
     private String code;
     @NotBlank
-    private String fallbackDate = "2025-12-31";
+    private String fallbackDate = "2030-12-31";
     @NotBlank
-    private String paidUpTo = "2025-12-31";
+    private String paidUpTo = "2030-12-31";
     @NotNull
     private Boolean extended = false;
 }

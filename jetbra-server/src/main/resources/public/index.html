@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Get keys</title>
+    <style>
+        :root {
+            --text-grey: #9e9e9e;
+            --text-main: rgba(0, 0, 0, 0.87);
+            --spacing: 4px;
+            --size: 64px;
+            --radius: 1.5rem;
+            --accent: #5380f7;
+            --text-sm: 0.875rem;
+            --main-bg: #fff;
+            --card-bg: #fff;
+            --hover-color: #eee;
+            --border-color: rgba(0, 0, 0, 0.05);
+            --grey-400: rgba(0, 0, 0, 0.04);
+            --grey-600: rgba(0, 0, 0, 0.06);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --main-bg: rgb(0, 0, 0);
+                --card-bg: rgb(31, 34, 38);
+                --text-main: #d9d9d9;
+                --text-grey: #6e767d;
+                --accent: #1d9bf0;
+                --hover-color: rgba(255, 255, 255, 0.07);
+                --border-color: #4b4648;
+            }
+        }
+
+        body {
+            font-size: 1rem;
+            line-height: 1.5;
+            word-wrap: break-word;
+            font-kerning: normal;
+            font-family: 'Gotham SSm A', 'Gotham SSm B', 'Arial Unicode MS', Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            background-color: var(--main-bg);
+        }
+
+        * ul, * ol {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        *[role='button'], button {
+            cursor: pointer;
+        }
+
+        .color-primary {
+            color: var(--text-main);
+        }
+
+
+        .mt-0 {
+            margin-top: 0;
+        }
+
+
+        .radius-1 {
+            border-radius: var(--radius);
+        }
+
+        .px-6 {
+            padding-left: calc(var(--spacing) * 6);
+            padding-right: calc(var(--spacing) * 6);
+        }
+
+        .py-10 {
+            padding-top: calc(var(--spacing) * 10);
+            padding-bottom: calc(var(--spacing) * 10);
+        }
+
+        .pd-6 {
+            padding: calc(var(--spacing) * 6);
+        }
+
+
+        .pt-1 {
+            padding-top: var(--spacing);
+        }
+
+        .pb-0 {
+            padding-bottom: 0;
+        }
+
+        .overflow-hidden {
+            overflow: hidden;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .justify-center {
+            justify-content: center;
+        }
+
+
+        .items-center {
+            align-items: center;
+        }
+
+        .shrink-0 {
+            flex-shrink: 0;
+        }
+
+        .text-grey {
+            color: var(--text-grey);
+        }
+
+        .text-sm {
+            font-size: 0.875rem;
+        }
+
+        .bg-card {
+            background-color: var(--card-bg);
+        }
+
+        .truncate {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: var(--line, 3);
+            overflow: hidden;
+        }
+
+        .truncate-1 {
+            --line: 1;
+        }
+
+        .overflow-ellipsis {
+            text-overflow: ellipsis;
+        }
+
+        .z-grid {
+            display: grid;
+            grid-gap: var(--gutter, 1rem);
+            grid-template-columns: repeat(auto-fill, minmax(min(var(--space, 10rem), 100%), 1fr));
+        }
+
+
+        .card {
+            box-shadow: rgb(0 0 0 / 30%) 0 8px 40px -12px;
+            border-radius: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+            width: 90%;
+            position: relative;
+            overflow: visible;
+            background-color: var(--card-bg);
+            margin: 0 auto;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .card:hover .mask {
+            bottom: -1.5rem;
+        }
+
+        .card:hover .mask-c-1 {
+            bottom: -2.5rem;
+        }
+
+        .container {
+            padding-top: calc(var(--spacing) * 10);
+        }
+
+        .container p {
+            position: relative;
+            cursor: pointer;
+            transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        }
+
+        .container p::after {
+            content: attr(data-content);
+            position: absolute;
+            transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+            color: transparent;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius);
+        }
+
+        .container p:hover {
+            color: transparent;
+        }
+
+        .container p:hover::after {
+            color: var(--text-main);
+            background-color: var(--hover-color);
+        }
+
+        .toggle li {
+            z-index: 99;
+            position: relative;
+            background: transparent;
+            padding: 0 20px;
+            color: var(--text-main);
+            transition: background-color 250ms ease-out;
+        }
+
+        .toggle li:hover {
+            background-color: var(--hover-color);
+        }
+
+        .toggle li.active a {
+            color: var(--accent);
+        }
+
+        .toggle li:first-child {
+            border-top-left-radius: var(--text-sm);
+            border-top-right-radius: var(--text-sm);
+        }
+
+        .toggle li:last-child {
+            border-bottom-left-radius: var(--text-sm);
+            border-bottom-right-radius: var(--text-sm);
+        }
+
+        .toggle li:last-child a {
+            border-bottom: 0;
+        }
+
+        .toggle li a {
+            display: block;
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 0;
+            color: inherit;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .icon {
+            background-image: url('images/icons.svg?t=4567');
+            background-size: 64px;
+            background-position-x: 0;
+        }
+
+        .icon-ii {
+            background-position-y: -448px;
+        }
+
+        .icon-ps {
+            background-position-y: -512px;
+        }
+
+        .icon-ac {
+            background-position-y: -192px;
+        }
+
+        .icon-db {
+            background-position-y: -320px;
+        }
+
+        .icon-rm {
+            background-position-y: -896px;
+        }
+
+        .icon-ws {
+            background-position-y: -960px;
+        }
+
+        .icon-rd {
+            background-position-y: -832px;
+        }
+
+        .icon-cl {
+            background-position-y: -256px;
+        }
+
+        .icon-pc {
+            background-position-y: -576px;
+        }
+
+        .icon-go {
+            background-position-y: -384px;
+        }
+
+        .icon-ds {
+            background-position-y: -1792px;
+        }
+
+        .icon-dc {
+            background-position-y: -1408px;
+        }
+
+        .icon-dpn {
+            background-position-y: -1536px;
+        }
+
+        .icon-dm {
+            background-position-y: -1472px;
+        }
+
+        .mask {
+            transition: 0.2s;
+            position: absolute;
+            z-index: -1;
+            width: 88%;
+            height: 100%;
+            bottom: 0;
+            border-radius: 1.5rem;
+            background-color: var(--grey-600);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .mask-c-1 {
+            bottom: 0;
+            width: 72%;
+            background-color: var(--grey-400);
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: var(--size);
+            height: var(--size);
+            font-size: 1.25rem;
+            user-select: none;
+            transform: translateY(50%);
+        }
+
+        .avatar-wrapper img, .avatar-wrapper .icon {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            background-color: var(--card-bg);
+            color: transparent;
+            object-fit: cover;
+            text-align: center;
+            text-indent: 10000px;
+        }
+
+
+        header.tip a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        header.tip p {
+            word-break: break-word;
+            word-wrap: break-word;
+        }
+
+
+        main hr {
+            margin: 0;
+            padding: 0;
+            background: var(--border-color);
+            height: 1px;
+            border: none;
+        }
+
+        footer {
+            --_size: 40px;
+            padding-top: var(--_size);
+            width: 96%;
+            margin: calc(var(--spacing) * 10) auto 0;
+            padding-bottom: var(--_size);
+            border-top: 1px solid var(--border-color);
+            -moz-box-align: center;
+            -webkit-box-pack: justify;
+        }
+
+        footer .lt-panel p:nth-of-type(1) {
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+<main class="px-6 z-grid py-10" style="--space: 20rem; --gutter: 3.5rem">
+    <article class="card" >
+        <header>
+            <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
+                <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
+                    <div class="icon icon-ii" role="img"></div>
+                </div>
+            </div>
+            <hr/>
+        </header>
+        <div class="pd-6 overflow-hidden bg-card container radius-1">
+            <h1 class="truncate truncate-1 color-primary mt-0 overflow-ellipsis" title='IntelliJ IDEA'>IntelliJ
+                IDEA</h1>
+            <p title="Click to copy full license text" class="truncate text-sm text-grey" onclick="copyLicense(this)"
+               data-content="Copy to clipboard">
+                *********************************************************************************************************************************************************
+            </p>
+        </div>
+        <div class="mask"></div>
+        <div class="mask mask-c-1"></div>
+    </article>
+    <article class="card" >
+        <header>
+            <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
+                <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
+                    <div class="icon icon-ps" role="img"></div>
+                </div>
+            </div>
+            <hr/>
+        </header>
+        <div class="pd-6 overflow-hidden bg-card container radius-1">
+            <h1 class="truncate truncate-1 color-primary mt-0 overflow-ellipsis" title='PhpStorm'>PhpStorm</h1>
+            <p title="Click to copy full license text" class="truncate text-sm text-grey" onclick="copyLicense(this)"
+               data-content="Copy to clipboard">
+                *********************************************************************************************************************************************************
+            </p>
+        </div>
+        <div class="mask"></div>
+        <div class="mask mask-c-1"></div>
+    </article>
+    <article class="card" >
+        <header>
+            <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
+                <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
+                    <div class="icon icon-ac" role="img"></div>
+                </div>
+            </div>
+            <hr/>
+        </header>
+        <div class="pd-6 overflow-hidden bg-card container radius-1">
+            <h1 class="truncate truncate-1 color-primary mt-0 overflow-ellipsis" title='AppCode'>AppCode</h1>
+            <p title="Click to copy full license text" class="truncate text-sm text-grey" onclick="copyLicense(this)"
+               data-content="Copy to clipboard">
+                *********************************************************************************************************************************************************
+            </p>
+        </div>
+        <div class="mask"></div>
+        <div class="mask mask-c-1"></div>
+    </article>
+    <article class="card" >
+        <header>
+            <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
+                <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
+                    <div class="icon icon-db" role="img"></div>
+                </div>
+            </div>
+            <hr/>
+        </header>
+        <div class="pd-6 overflow-hidden bg-card container radius-1">
+            <h1 class="truncate truncate-1 color-primary mt-0 overflow-ellipsis" title='DataGrip'>DataGrip</h1>
+            <p title="Click to copy full license text" class="truncate text-sm text-grey" onclick="copyLicense(this)"
+               data-content="Copy to clipboard">
+                *********************************************************************************************************************************************************
+            </p>
+        </div>
+        <div class="mask"></div>
+        <div class="mask mask-c-1"></div>
+    </article>
+    <article class="card" >
+        <header>
+            <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
+                <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
+                    <div class="icon icon-rm" role="img"></div>
+                </div>
+            </div>
+            <hr/>
+        </header>
+        <div class="pd-6 overflow-hidden bg-card container radius-1">
+            <h1 class="truncate truncate-1 color-primary mt-0 overflow-ellipsis" title='RubyMine'>RubyMine</h1>
+            <p title="Click to copy full license text" class="truncate text-sm text-grey" onclick="copyLicense(this)"
+               data-content="Copy to clipboard">
+                *********************************************************************************************************************************************************
+            </p>
+        </div>
+        <div class="mask"></div>
+        <div class="mask mask-c-1"></div>
+    </article>
+    <article class="card" >
+        <header>
+            <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
+                <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
+                    <div class="icon icon-ws" role="img"></div>
+                </div>
+            </div>
+            <hr/>
+        </header>
+        <div class="pd-6 overflow-hidden bg-card container radius-1">
+            <h1 class="truncate truncate-1 color-primary mt-0 overflow-ellipsis" title='WebStorm'>WebStorm</h1>
+            <p title="Click to copy full license text" class="truncate text-sm text-grey" onclick="copyLicense(this)"
+               data-content="Copy to clipboard">
+                *********************************************************************************************************************************************************
+            </p>
+        </div>
+        <div class="mask"></div>
+        <div class="mask mask-c-1"></div>
+    </article>
+    <article class="card" >
+        <header>
+            <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
+                <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
+                    <div class="icon icon-rd" role="img"></div>
+                </div>
+            </div>
+            <hr/>
+        </header>
+        <div class="pd-6 overflow-hidden bg-card container radius-1">
+            <h1 class="truncate truncate-1 color-primary mt-0 overflow-ellipsis" title='Rider'>Rider</h1>
+            <p title="Click to copy full license text" class="truncate text-sm text-grey" onclick="copyLicense(this)"
+               data-content="Copy to clipboard">
+                *********************************************************************************************************************************************************
+            </p>
+        </div>
+        <div class="mask"></div>
+        <div class="mask mask-c-1"></div>
+    </article>
+    <article class="card" >
+        <header>
+            <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
+                <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
+                    <div class="icon icon-cl" role="img"></div>
+                </div>
+            </div>
+            <hr/>
+        </header>
+        <div class="pd-6 overflow-hidden bg-card container radius-1">
+            <h1 class="truncate truncate-1 color-primary mt-0 overflow-ellipsis" title='CLion'>CLion</h1>
+            <p title="Click to copy full license text" class="truncate text-sm text-grey" onclick="copyLicense(this)"
+               data-content="Copy to clipboard">
+                *********************************************************************************************************************************************************
+            </p>
+        </div>
+        <div class="mask"></div>
+        <div class="mask mask-c-1"></div>
+    </article>
+    <article class="card" >
+        <header>
+            <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
+                <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
+                    <div class="icon icon-pc" role="img"></div>
+                </div>
+            </div>
+            <hr/>
+        </header>
+        <div class="pd-6 overflow-hidden bg-card container radius-1">
+            <h1 class="truncate truncate-1 color-primary mt-0 overflow-ellipsis" title='PyCharm'>PyCharm</h1>
+            <p title="Click to copy full license text" class="truncate text-sm text-grey" onclick="copyLicense(this)"
+               data-content="Copy to clipboard">
+                *********************************************************************************************************************************************************
+            </p>
+        </div>
+        <div class="mask"></div>
+        <div class="mask mask-c-1"></div>
+    </article>
+    <article class="card" >
+        <header>
+            <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
+                <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
+                    <div class="icon icon-go" role="img"></div>
+                </div>
+            </div>
+            <hr/>
+        </header>
+        <div class="pd-6 overflow-hidden bg-card container radius-1">
+            <h1 class="truncate truncate-1 color-primary mt-0 overflow-ellipsis" title='GoLand'>GoLand</h1>
+            <p title="Click to copy full license text" class="truncate text-sm text-grey" onclick="copyLicense(this)"
+               data-content="Copy to clipboard">
+                *********************************************************************************************************************************************************
+            </p>
+        </div>
+        <div class="mask"></div>
+        <div class="mask mask-c-1"></div>
+    </article>
+    <article class="card" >
+        <header>
+            <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
+                <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
+                    <div class="icon icon-ds" role="img"></div>
+                </div>
+            </div>
+            <hr/>
+        </header>
+        <div class="pd-6 overflow-hidden bg-card container radius-1">
+            <h1 class="truncate truncate-1 color-primary mt-0 overflow-ellipsis" title='DataSpell'>DataSpell</h1>
+            <p title="Click to copy full license text" class="truncate text-sm text-grey" onclick="copyLicense(this)"
+               data-content="Copy to clipboard">
+                *********************************************************************************************************************************************************
+            </p>
+        </div>
+        <div class="mask"></div>
+        <div class="mask mask-c-1"></div>
+    </article>
+    <article class="card" >
+        <header>
+            <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
+                <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
+                    <div class="icon icon-dc" role="img"></div>
+                </div>
+            </div>
+            <hr/>
+        </header>
+        <div class="pd-6 overflow-hidden bg-card container radius-1">
+            <h1 class="truncate truncate-1 color-primary mt-0 overflow-ellipsis" title='dotCover'>dotCover</h1>
+            <p title="Click to copy full license text" class="truncate text-sm text-grey" onclick="copyLicense(this)"
+               data-content="Copy to clipboard">
+                *********************************************************************************************************************************************************
+            </p>
+        </div>
+        <div class="mask"></div>
+        <div class="mask mask-c-1"></div>
+    </article>
+    <article class="card" >
+        <header>
+            <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
+                <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
+                    <div class="icon icon-dpn" role="img"></div>
+                </div>
+            </div>
+            <hr/>
+        </header>
+        <div class="pd-6 overflow-hidden bg-card container radius-1">
+            <h1 class="truncate truncate-1 color-primary mt-0 overflow-ellipsis" title='dotTrace'>dotTrace</h1>
+            <p title="Click to copy full license text" class="truncate text-sm text-grey" onclick="copyLicense(this)"
+               data-content="Copy to clipboard">
+                *********************************************************************************************************************************************************
+            </p>
+        </div>
+        <div class="mask"></div>
+        <div class="mask mask-c-1"></div>
+    </article>
+    <article class="card" >
+        <header>
+            <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
+                <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
+                    <div class="icon icon-dm" role="img"></div>
+                </div>
+            </div>
+            <hr/>
+        </header>
+        <div class="pd-6 overflow-hidden bg-card container radius-1">
+            <h1 class="truncate truncate-1 color-primary mt-0 overflow-ellipsis" title='dotMemory'>dotMemory</h1>
+            <p title="Click to copy full license text" class="truncate text-sm text-grey" onclick="copyLicense(this)"
+               data-content="Copy to clipboard">
+                *********************************************************************************************************************************************************
+            </p>
+        </div>
+        <div class="mask"></div>
+        <div class="mask mask-c-1"></div>
+    </article>
+</main>
+<footer class="flex items-center justify-between">
+    <div class="text-sm text-grey">Theme by QieTuZai</div>
+    <div class="text-sm text-grey">Copy from ja-netfilter</div>
+</footer>
+<script>
+    const codes = ["YTD", "QDGO", "MF", "DG", "PS", "QA", "IIE", "YTWE", "FLS", "DLE", "RFU", "PPS", "PCWMP", "II", "TCC", "RSU", "PCC", "RC", "PCE", "FLIJ", "TBA", "DL", "SPP", "QDCLD", "SPA", "DMCLP", "PSW", "GW", "PSI", "IIU", "DMU", "PWS", "HB", "WS", "PCP", "KT", "DCCLT", "RSCLT", "WRS", "RSC", "RRD", "TC", "IIC", "QDPY", "DPK", "DC", "PDB", "DPPS", "QDPHP", "GO", "HCC", "RDCPPP", "QDJVMC", "CL", "DM", "CWML", "FLL", "RR", "QDJS", "RS", "RM", "DS", "MPS", "DPN", "US", "CLN", "DPCLT", "RSV", "MPSIIP", "DB", "QDANDC", "AC", "QDJVM", "PRB", "RD", "CWMR", "SP", "RS0", "DP", "RSF", "PGO", "QDPYC", "PPC", "PC", "EHS", "RSCHB", "FL", "QDNET", "JCD"]
+    window.copyLicense = async function () {
+        let products = Array.from(codes).map((code) => {
+            return {code: code}
+        })
+        let data = {
+            "licenseeName": "test",
+            "assigneeName": "test",
+            "assigneeEmail": "",
+            "licenseRestriction": "",
+            "checkConcurrentUse": false,
+            "products": products,
+            "metadata": "0120230102PPAA013009",
+            "hash": "41472961/0:1563609451",
+            "gracePeriodDays": 7,
+            "autoProlongated": true,
+            "isAutoProlongated": true
+        }
+        let resp = await fetch('/generateLicense', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(response => response.json())
+        navigator.clipboard.writeText(resp.license)
+            .then(() => {
+                alert("The activation code has been copied to your clipboard");
+            })
+    }
+</script>
+</body>
+</html>
