@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JetBra
 // @namespace    https://github.com/novice88/jetbra
-// @version      2.0
+// @version      2.1
 // @license MIT
 // @description  Add a button on the plugin homepage and click to get the plugin activation code
 // @author       novice.li
@@ -9,6 +9,7 @@
 // @grant        GM_setClipboard
 // @grant        GM_addStyle
 // @grant        GM_xmlhttpRequest
+// @grant        window.onurlchange
 // @connect noviceli.win
 // @connect self
 // @connect localhost
@@ -27,7 +28,7 @@ async function findElementWithRetry(cssSelector) {
     throw new Error(`Element with selector '${cssSelector}' not found after ${maxAttempts} attempts.`);
 }
 
-(async function () {
+let addButton = async function () {
     'use strict';
     GM_addStyle(`
     .jetbra-button {
@@ -59,6 +60,10 @@ async function findElementWithRetry(cssSelector) {
 
     const parentElement = await findElementWithRetry('.plugin-header__controls-panel > div:first-child');
 
+    // 如果 parentElement 的孩子中已经有了按钮，就不再添加
+    if (parentElement.querySelector('.jetbra-button')) {
+        return;
+    }
     let newElement = document.createElement('div');
     newElement.classList.toggle('wt-col-inline');
     newElement.innerHTML = `<button class="jetbra-button" type="button">CLICK TO GENERATE ACTIVATION CODE</button>`;
@@ -101,4 +106,11 @@ async function findElementWithRetry(cssSelector) {
             }
         });
     })
-})();
+};
+
+addButton();
+if (window.onurlchange === null) {
+    window.addEventListener('urlchange', (info) => {
+        addButton();
+    });
+}
