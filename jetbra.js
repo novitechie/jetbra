@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JetBra
 // @namespace    https://github.com/novice88/jetbra
-// @version      2.1
+// @version      3.0
 // @license MIT
 // @description  Add a button on the plugin homepage and click to get the plugin activation code
 // @author       novice.li
@@ -107,8 +107,9 @@ let addButton = async function () {
         });
     })
 };
-
-addButton();
+window.onload = function () {
+    addButton();
+}
 if (window.onurlchange === null) {
     window.addEventListener('urlchange', (info) => {
         addButton();
