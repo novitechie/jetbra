@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         JetBra
 // @namespace    https://github.com/novice88/jetbra
-// @version      3.0
+// @version      3.1
 // @license MIT
 // @description  Add a button on the plugin homepage and click to get the plugin activation code
 // @author       novice.li
-// @match        https://plugins.jetbrains.com/plugin/*
+// @match        https://plugins.jetbrains.com/*
 // @grant        GM_setClipboard
 // @grant        GM_addStyle
 // @grant        GM_xmlhttpRequest
@@ -29,6 +29,7 @@ async function findElementWithRetry(cssSelector) {
 }
 
 let addButton = async function () {
+    console.log('JetBra is running');
     'use strict';
     GM_addStyle(`
     .jetbra-button {
@@ -50,11 +51,16 @@ let addButton = async function () {
     }
 `);
     const backendBaseUrl = 'https://jetbra.noviceli.win'
-    const metaTag = document.querySelector('meta[name="pluginId"]')
-    if (!metaTag) {
-        return
+
+    // 获取插件的 id
+    // 如果当前url满足 https://plugins.jetbrains.com/plugin/<pluginId>-xxx 的格式，就直接从url中获取
+    let url = window.location.href
+    if (!url.startsWith('https://plugins.jetbrains.com/plugin/')) {
+        return;
     }
-    const pluginId = metaTag.getAttribute('content')
+    // 提取 pluginId
+    let pluginId = url.split('/')[4].split('-')[0]
+    console.log('pluginId: ' + pluginId);
 
     let pluginDetail = await fetch('https://plugins.jetbrains.com/api/plugins/' + pluginId).then(r => r.json());
 
@@ -107,9 +113,8 @@ let addButton = async function () {
         });
     })
 };
-window.onload = function () {
-    addButton();
-}
+
+addButton();
 if (window.onurlchange === null) {
     window.addEventListener('urlchange', (info) => {
         addButton();
