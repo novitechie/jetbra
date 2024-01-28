@@ -6,6 +6,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Get keys</title>
     <style>
+        .form {
+            background-color: #15172b;
+            border-radius: 20px;
+            box-sizing: border-box;
+            height: 500px;
+            padding: 20px;
+            width: 320px;
+        }
+
+        .title {
+            color: #eee;
+            font-family: sans-serif;
+            font-size: 36px;
+            font-weight: 600;
+            margin-top: 30px;
+        }
+
+        .subtitle {
+            color: #eee;
+            font-family: sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .input-container {
+            height: 50px;
+            position: relative;
+            width: 100%;
+        }
+
+        .ic1 {
+            margin-top: 40px;
+        }
+
+        .ic2 {
+            margin-top: 30px;
+        }
+
+        .input {
+            background-color: #303245;
+            border-radius: 12px;
+            border: 0;
+            box-sizing: border-box;
+            color: #eee;
+            font-size: 18px;
+            height: 100%;
+            outline: 0;
+            padding: 4px 20px 0;
+            width: 100%;
+        }
+
+        .cut {
+            background-color: #15172b;
+            border-radius: 10px;
+            height: 20px;
+            left: 20px;
+            position: absolute;
+            top: -20px;
+            transform: translateY(0);
+            transition: transform 200ms;
+            width: 76px;
+        }
+
+        .cut-short {
+            width: 50px;
+        }
+
+        .input:focus ~ .cut,
+        .input:not(:placeholder-shown) ~ .cut {
+            transform: translateY(8px);
+        }
+
+        .placeholder {
+            color: #65657b;
+            font-family: sans-serif;
+            left: 20px;
+            line-height: 14px;
+            pointer-events: none;
+            position: absolute;
+            transform-origin: 0 50%;
+            transition: transform 200ms, color 200ms;
+            top: 20px;
+        }
+
+        .input:focus ~ .placeholder,
+        .input:not(:placeholder-shown) ~ .placeholder {
+            transform: translateY(-30px) translateX(10px) scale(0.75);
+        }
+
+        .input:not(:placeholder-shown) ~ .placeholder {
+            color: #808097;
+        }
+
+        .input:focus ~ .placeholder {
+            color: #dc2f55;
+        }
+
+        .submit {
+            background-color: #08d;
+            border-radius: 12px;
+            border: 0;
+            box-sizing: border-box;
+            color: #eee;
+            cursor: pointer;
+            font-size: 18px;
+            height: 50px;
+            margin-top: 38px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .submit:active {
+            background-color: #06b;
+        }
+
+    </style>
+    <style>
         :root {
             --text-grey: #9e9e9e;
             --text-main: rgba(0, 0, 0, 0.87);
@@ -386,9 +504,9 @@
         }
     </style>
 </head>
-<body>
+<body style="width:100%;height:100%;">
 <main class="px-6 z-grid py-10" style="--space: 20rem; --gutter: 3.5rem">
-    <article class="card" >
+    <article class="card" data-product="IntelliJ IDEA" data-product-codes="II,PCWMP,PSI">
         <header>
             <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
                 <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
@@ -408,7 +526,7 @@
         <div class="mask"></div>
         <div class="mask mask-c-1"></div>
     </article>
-    <article class="card" >
+    <article class="card" data-product="PhpStorm" data-product-codes="PS,PCWMP,PSI">
         <header>
             <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
                 <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
@@ -427,7 +545,7 @@
         <div class="mask"></div>
         <div class="mask mask-c-1"></div>
     </article>
-    <article class="card" >
+    <article class="card" data-product="AppCode" data-product-codes="AC,PCWMP,PSI">
         <header>
             <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
                 <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
@@ -446,7 +564,7 @@
         <div class="mask"></div>
         <div class="mask mask-c-1"></div>
     </article>
-    <article class="card" >
+    <article class="card" data-product="DataGrip" data-product-codes="DB,PSI,PDB">
         <header>
             <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
                 <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
@@ -465,7 +583,7 @@
         <div class="mask"></div>
         <div class="mask mask-c-1"></div>
     </article>
-    <article class="card" >
+    <article class="card" data-product="RubyMine" data-product-codes="RM,PCWMP,PSI">
         <header>
             <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
                 <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
@@ -484,7 +602,7 @@
         <div class="mask"></div>
         <div class="mask mask-c-1"></div>
     </article>
-    <article class="card" >
+    <article class="card" data-product="WebStorm" data-product-codes="WS,PCWMP,PSI">
         <header>
             <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
                 <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
@@ -503,7 +621,7 @@
         <div class="mask"></div>
         <div class="mask mask-c-1"></div>
     </article>
-    <article class="card" >
+    <article class="card" data-product="Rider" data-product-codes="RD,PDB,PSI,PCWMP">
         <header>
             <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
                 <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
@@ -522,7 +640,7 @@
         <div class="mask"></div>
         <div class="mask mask-c-1"></div>
     </article>
-    <article class="card" >
+    <article class="card" data-product="CLion" data-product-codes="CL,PSI,PCWMP">
         <header>
             <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
                 <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
@@ -541,7 +659,7 @@
         <div class="mask"></div>
         <div class="mask mask-c-1"></div>
     </article>
-    <article class="card" >
+    <article class="card" data-product="PyCharm" data-product-codes="PC,PSI,PCWMP">
         <header>
             <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
                 <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
@@ -560,7 +678,7 @@
         <div class="mask"></div>
         <div class="mask mask-c-1"></div>
     </article>
-    <article class="card" >
+    <article class="card" data-product="GoLand" data-product-codes="GO,PSI,PCWMP">
         <header>
             <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
                 <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
@@ -579,7 +697,7 @@
         <div class="mask"></div>
         <div class="mask mask-c-1"></div>
     </article>
-    <article class="card" >
+    <article class="card" data-product="DataSpell" data-product-codes="DS,PSI,PDB,PCWMP">
         <header>
             <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
                 <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
@@ -598,7 +716,7 @@
         <div class="mask"></div>
         <div class="mask mask-c-1"></div>
     </article>
-    <article class="card" >
+    <article class="card" data-product="dotCover" data-product-codes="DC">
         <header>
             <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
                 <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
@@ -617,7 +735,7 @@
         <div class="mask"></div>
         <div class="mask mask-c-1"></div>
     </article>
-    <article class="card" >
+    <article class="card" data-product="dotTrace" data-product-codes="DPN,DP">
         <header>
             <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
                 <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
@@ -636,7 +754,7 @@
         <div class="mask"></div>
         <div class="mask mask-c-1"></div>
     </article>
-    <article class="card" >
+    <article class="card" data-product="dotMemory" data-product-codes="DM">
         <header>
             <div class="flex items-center justify-between px-6 pt-1 pb-0 bg-card radius-1">
                 <div class="avatar-wrapper flex items-center justify-center overflow-hidden shrink-0">
@@ -660,15 +778,72 @@
     <div class="text-sm text-grey">Theme by QieTuZai</div>
     <div class="text-sm text-grey">Copy from ja-netfilter</div>
 </footer>
+<div id ="mask" style="position:fixed;top:0;left:0;z-index:998;width:100%;height:100%;display:none;background-color:#000;opacity:0.5;overflow:hidden;"></div>
+<div id="form" style="position:fixed;top:20%;left:40%;width:40%;height:500px;z-index:999;display:none;">
+    <div class="form">
+        <div class="title">Welcome</div>
+        <div class="subtitle">Please enter licensee information</div>
+        <div class="input-container ic1">
+            <input id="licenseeName" class="input" type="text" placeholder=" " value="Test only"/>
+            <div class="cut"></div>
+            <label for="licenseeName" class="placeholder">licenseeName</label>
+        </div>
+        <div class="input-container ic2">
+            <input id="assigneeName" class="input" type="text" placeholder=" " value="Test only"/>
+            <div class="cut"></div>
+            <label for="assigneeName" class="placeholder">assigneeName</label>
+        </div>
+        <div class="input-container ic2">
+            <input id="expiryDate" class="input" type="text" placeholder="" value="2030-12-31"/>
+            <div class="cut cut-short"></div>
+            <label for="expiryDate" class="placeholder">expiryDate</label>
+        </div>
+        <button  class="submit" onclick="submitLicenseInfo(this)">submit</button>
+    </div>
+</div>
+
+
 <script>
-    const codes = ["YTD", "QDGO", "MF", "DG", "PS", "QA", "IIE", "YTWE", "FLS", "DLE", "RFU", "PPS", "PCWMP", "II", "TCC", "RSU", "PCC", "RC", "PCE", "FLIJ", "TBA", "DL", "SPP", "QDCLD", "SPA", "DMCLP", "PSW", "GW", "PSI", "IIU", "DMU", "PWS", "HB", "WS", "PCP", "KT", "DCCLT", "RSCLT", "WRS", "RSC", "RRD", "TC", "IIC", "QDPY", "DPK", "DC", "PDB", "DPPS", "QDPHP", "GO", "HCC", "RDCPPP", "QDJVMC", "CL", "DM", "CWML", "FLL", "RR", "QDJS", "RS", "RM", "DS", "MPS", "DPN", "US", "CLN", "DPCLT", "RSV", "MPSIIP", "DB", "QDANDC", "AC", "QDJVM", "PRB", "RD", "CWMR", "SP", "RS0", "DP", "RSF", "PGO", "QDPYC", "PPC", "PC", "EHS", "RSCHB", "FL", "QDNET", "JCD"]
-    window.copyLicense = async function () {
+    if (localStorage.getItem('licenseInfo') === null) {
+        document.getElementById('mask').style.display = 'block'
+        document.getElementById('form').style.display = 'block'
+    }
+    window.submitLicenseInfo = function () {
+        let licenseeName = document.getElementById('licenseeName').value
+        let assigneeName = document.getElementById('assigneeName').value
+        let expiryDate = document.getElementById('expiryDate').value
+        let licenseInfo = {
+            licenseeName: licenseeName,
+            assigneeName: assigneeName,
+            expiryDate: expiryDate
+        }
+        localStorage.setItem('licenseInfo', JSON.stringify(licenseInfo))
+        document.getElementById('mask').style.display = 'none'
+        document.getElementById('form').style.display = 'none'
+    }
+</script>
+
+<script>
+    // const codes = ["YTD", "QDGO", "MF", "DG", "PS", "QA", "IIE", "YTWE", "FLS", "DLE", "RFU", "PPS", "PCWMP", "II", "TCC", "RSU", "PCC", "RC", "PCE", "FLIJ", "TBA", "DL", "SPP", "QDCLD", "SPA", "DMCLP", "PSW", "GW", "PSI", "IIU", "DMU", "PWS", "HB", "WS", "PCP", "KT", "DCCLT", "RSCLT", "WRS", "RSC", "RRD", "TC", "IIC", "QDPY", "DPK", "DC", "PDB", "DPPS", "QDPHP", "GO", "HCC", "RDCPPP", "QDJVMC", "CL", "DM", "CWML", "FLL", "RR", "QDJS", "RS", "RM", "DS", "MPS", "DPN", "US", "CLN", "DPCLT", "RSV", "MPSIIP", "DB", "QDANDC", "AC", "QDJVM", "PRB", "RD", "CWMR", "SP", "RS0", "DP", "RSF", "PGO", "QDPYC", "PPC", "PC", "EHS", "RSCHB", "FL", "QDNET", "JCD"]
+    window.copyLicense = async function (e) {
+
+        while (localStorage.getItem('licenseInfo') === null) {
+            document.getElementById('mask').style.display = 'block'
+            document.getElementById('form').style.display = 'block'
+            await new Promise(r => setTimeout(r, 1000));
+        }
+        let licenseInfo =  JSON.parse(localStorage.getItem('licenseInfo'))
+        let codes = e.closest('.card').dataset.productCodes.split(',')
         let products = Array.from(codes).map((code) => {
-            return {code: code}
+            return {
+                code: code,
+                fallbackDate: licenseInfo.expiryDate,
+                paidUpTo: licenseInfo.expiryDate
+            }
         })
         let data = {
-            "licenseeName": "test",
-            "assigneeName": "test",
+            "licenseeName": licenseInfo.licenseeName,
+            "assigneeName": licenseInfo.assigneeName,
             "assigneeEmail": "",
             "licenseRestriction": "",
             "checkConcurrentUse": false,
