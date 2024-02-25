@@ -25,10 +25,10 @@ public class AgentMain {
                                 .on(ElementMatchers.named("openServer").and(ElementMatchers.takesArgument(0, String.class)))))
                 .asTerminalTransformation()
 
-                .type(ElementMatchers.named("java.lang.System"))
+                .type(ElementMatchers.named("com.intellij.diagnostic.VMOptions"))
                 .transform((builder, typeDescription, classLoader, module, protectionDomain) -> builder
-                        .visit(Advice.to(SystemAdvice.class)
-                                .on(ElementMatchers.named("getProperty"))))
+                        .visit(Advice.to(VMOptionsAdvice.class)
+                                .on(ElementMatchers.named("getUserOptionsFile"))))
                 .asTerminalTransformation()
 
                 .installOn(inst);
