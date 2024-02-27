@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JetBra
 // @namespace    https://github.com/novice88/jetbra
-// @version      3.1
+// @version      3.2
 // @license MIT
 // @description  Add a button on the plugin homepage and click to get the plugin activation code
 // @author       novice.li
@@ -81,15 +81,15 @@ let addButton = async function () {
             return;
         }
         let data = {
-            "licenseeName": "Test",
-            "assigneeName": "novice.li",
+            "licenseeName": "reborn",
+            "assigneeName": "reborn",
             "assigneeEmail": "",
             "licenseRestriction": "",
             "checkConcurrentUse": false,
             "products": [{
                 "code": pluginDetail.purchaseInfo.productCode,
-                "fallbackDate": "2099-12-30",
-                "paidUpTo": "2099-12-30",
+                "fallbackDate": "2026-12-30",
+                "paidUpTo": "2026-12-30",
                 "extended": false
             }],
             "metadata": "0120230102PPAA013009",

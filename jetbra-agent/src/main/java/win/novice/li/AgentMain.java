@@ -18,7 +18,6 @@ public class AgentMain {
                                 .on(ElementMatchers.isConstructor().and(ElementMatchers.takesArgument(0, Set.class)))))
                 .asTerminalTransformation()
 
-
                 .type(ElementMatchers.named("sun.net.www.http.HttpClient"))
                 .transform((builder, typeDescription, classLoader, module, protectionDomain) -> builder
                         .visit(Advice.to(HttpClientAdvice.class)
