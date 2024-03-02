@@ -4,7 +4,26 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Get keys</title>
+    <title>Generate License</title>
+    <style>
+        .jetbra-button {
+            background-color: #04AA6D;
+            border: none;
+            color: white;
+            padding: 8px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 16px;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            transition-duration: 0.4s;
+        }
+
+        .jetbra-button:hover {
+            background-color: #057e47;
+            color: white;
+        }
+    </style>
     <style>
         .form {
             background-color: #15172b;
@@ -776,6 +795,7 @@
 </main>
 <footer class="flex items-center justify-between">
     <div class="text-sm text-grey">Theme by QieTuZai</div>
+    <div class="text-sm text-grey"><button class="jetbra-button" onclick="showLicenseForm()">Refill licensee information</button></div>
     <div class="text-sm text-grey">Copy from ja-netfilter</div>
 </footer>
 <div id ="mask" style="position:fixed;top:0;left:0;z-index:998;width:100%;height:100%;display:none;background-color:#000;opacity:0.5;overflow:hidden;"></div>
@@ -794,14 +814,13 @@
             <label for="assigneeName" class="placeholder">assigneeName</label>
         </div>
         <div class="input-container ic2">
-            <input id="expiryDate" class="input" type="text" placeholder="" value="2030-12-31"/>
+            <input id="expiryDate" class="input" type="text" placeholder="" value="2026-12-31"/>
             <div class="cut cut-short"></div>
             <label for="expiryDate" class="placeholder">expiryDate</label>
         </div>
         <button  class="submit" onclick="submitLicenseInfo(this)">submit</button>
     </div>
 </div>
-
 
 <script>
     if (localStorage.getItem('licenseInfo') === null) {
@@ -820,6 +839,21 @@
         localStorage.setItem('licenseInfo', JSON.stringify(licenseInfo))
         document.getElementById('mask').style.display = 'none'
         document.getElementById('form').style.display = 'none'
+    }
+    window.showLicenseForm = function () {
+        let licenseInfo = localStorage.getItem('licenseInfo');
+        if (licenseInfo !== null) {
+            licenseInfo = JSON.parse(licenseInfo)
+            document.getElementById('licenseeName').value = licenseInfo.licenseeName
+            document.getElementById('assigneeName').value = licenseInfo.assigneeName
+            document.getElementById('expiryDate').value = licenseInfo.expiryDate
+        }else {
+            document.getElementById('licenseeName').value = 'Test only'
+            document.getElementById('assigneeName').value = 'Test only'
+            document.getElementById('expiryDate').value = '2026-12-31'
+        }
+        document.getElementById('mask').style.display = 'block'
+        document.getElementById('form').style.display = 'block'
     }
 </script>
 
