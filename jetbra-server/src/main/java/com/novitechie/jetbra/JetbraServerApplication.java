@@ -1,4 +1,4 @@
-package win.novice.li;
+package com.novitechie.jetbra;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

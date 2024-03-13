@@ -1,9 +1,7 @@
 name: Maven Build and Release
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   release:
@@ -41,7 +39,7 @@ jobs:
       - name: Set up Git
         run: |
           git config user.email "novice88@users.noreply.github.com"
-          git config user.name "novice88"
+          git config user.name "novitechie"
 
       - name: Create Tag
         run: git tag -a v${{ github.run_number }} -m "Release version v${{ github.run_number }}"
@@ -54,4 +52,4 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "jetbra-dist/target/jetbra-all.zip"
-          tag: v${{ github.run_number }}
+          tag: Jetbra

@@ -1,4 +1,4 @@
-package win.novice.li.controller;
+package com.novitechie.jetbra.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -11,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import win.novice.li.model.License;
+import com.novitechie.jetbra.model.License;
 
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;

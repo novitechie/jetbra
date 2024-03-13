@@ -1,4 +1,4 @@
-package win.novice.li;
+package com.novitechie.jetbra;
 
 import java.io.File;
 import java.net.URI;

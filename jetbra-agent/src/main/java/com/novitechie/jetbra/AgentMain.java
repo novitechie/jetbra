@@ -1,4 +1,4 @@
-package win.novice.li;
+package com.novitechie.jetbra;
 
 import net.bytebuddy.agent.builder.AgentBuilder;
 import net.bytebuddy.asm.Advice;

@@ -1,5 +1,5 @@
 
-package win.novice.li.model;
+package com.novitechie.jetbra.model;
 
 
 import lombok.Data;
