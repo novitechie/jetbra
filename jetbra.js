@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JetBra
-// @namespace    https://github.com/novice88/jetbra
-// @version      3.2
+// @namespace    https://github.com/novitechie/jetbra
+// @version      3.3
 // @license MIT
 // @description  Add a button on the plugin homepage and click to get the plugin activation code
 // @author       novice.li
@@ -52,13 +52,11 @@ let addButton = async function () {
 `);
     const backendBaseUrl = 'https://jetbra.noviceli.win'
 
-    // 获取插件的 id
-    // 如果当前url满足 https://plugins.jetbrains.com/plugin/<pluginId>-xxx 的格式，就直接从url中获取
     let url = window.location.href
     if (!url.startsWith('https://plugins.jetbrains.com/plugin/')) {
         return;
     }
-    // 提取 pluginId
+
     let pluginId = url.split('/')[4].split('-')[0]
     console.log('pluginId: ' + pluginId);
 
@@ -66,7 +64,6 @@ let addButton = async function () {
 
     const parentElement = await findElementWithRetry('.plugin-header__controls-panel > div:first-child');
 
-    // 如果 parentElement 的孩子中已经有了按钮，就不再添加
     if (parentElement.querySelector('.jetbra-button')) {
         return;
     }
