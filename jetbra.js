@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         JetBra
-// @namespace    https://github.com/novitechie/jetbra
+// @namespace    https://github.com/novice88/jetbra
 // @version      3.3
 // @license MIT
 // @description  Add a button on the plugin homepage and click to get the plugin activation code
