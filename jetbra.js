@@ -11,6 +11,7 @@
 // @grant        GM_xmlhttpRequest
 // @grant        window.onurlchange
 // @connect noviceli.win
+// @connect novitechie.com
 // @connect self
 // @connect localhost
 // ==/UserScript==
