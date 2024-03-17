@@ -50,7 +50,7 @@ let addButton = async function () {
         color: white;
     }
 `);
-    const backendBaseUrl = 'https://jetbra.noviceli.win'
+    const backendBaseUrl = 'https://jetbra.novitechie.com'
 
     let url = window.location.href
     if (!url.startsWith('https://plugins.jetbrains.com/plugin/')) {
