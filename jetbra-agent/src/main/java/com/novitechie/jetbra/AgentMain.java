@@ -30,6 +30,12 @@ public class AgentMain {
                                 .on(ElementMatchers.named("getUserOptionsFile"))))
                 .asTerminalTransformation()
 
+                .type(ElementMatchers.named("com.intellij.ui.LicensingFacade"))
+                .transform((builder, typeDescription, classLoader, javaModule, protectionDomain) ->
+                        builder.visit(Advice.to(LicensingFacadeAdvice.class)
+                                .on(ElementMatchers.named("getLicenseExpirationDate"))))
+                .asTerminalTransformation()
+
                 .installOn(inst);
 
         agentBuilder.installOn(inst);
@@ -37,10 +43,10 @@ public class AgentMain {
 
     static AgentBuilder newAgentBuilder() {
         return new AgentBuilder.Default()
-                .with(AgentBuilder.RedefinitionStrategy.RETRANSFORMATION)
-                .with(AgentBuilder.InitializationStrategy.NoOp.INSTANCE)
-                .with(AgentBuilder.TypeStrategy.Default.REDEFINE)
-                .ignore(ElementMatchers.nameStartsWith("net.bytebuddy."));
+                .ignore(ElementMatchers.none())
+                .with(AgentBuilder.RedefinitionStrategy.REDEFINITION)
+                .with(AgentBuilder.Listener.StreamWriting.toSystemError().withErrorsOnly())
+                .with(AgentBuilder.Listener.StreamWriting.toSystemOut().withTransformationsOnly());
     }
 
 
