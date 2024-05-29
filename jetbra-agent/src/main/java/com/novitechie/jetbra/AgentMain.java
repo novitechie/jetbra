@@ -37,8 +37,6 @@ public class AgentMain {
                 .asTerminalTransformation()
 
                 .installOn(inst);
-
-        agentBuilder.installOn(inst);
     }
 
     static AgentBuilder newAgentBuilder() {
