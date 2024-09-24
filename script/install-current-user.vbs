@@ -3,7 +3,7 @@ Set oEnv = oShell.Environment("USER")
 Set oFS = CreateObject("Scripting.FileSystemObject")
 
 Dim sEnvKey, sEnvVal, aJBProducts
-aJBProducts = Array("idea", "clion", "phpstorm", "goland", "pycharm", "webstorm", "webide", "rider", "datagrip", "rubymine", "appcode", "dataspell", "gateway", "jetbrains_client", "jetbrainsclient", "studio", "devecostudio")
+aJBProducts = Array("idea", "clion", "phpstorm", "goland", "pycharm", "webstorm", "webide", "rider", "datagrip", "rubymine", "appcode", "dataspell", "gateway", "jetbrains_client", "jetbrainsclient", "studio", "devecostudio","rustrover")
 
 Set re = New RegExp
 re.Global     = True
