@@ -985,11 +985,11 @@ fIqVyfK6t0eKJqrvp54XFEtJGR+lf3pBfTdcOI6QFEPKGZKoQz8Ck+BC/WBDtbjc
         }).join('');
     }
 
-    function buildLicensePartJson(products, licenseId) {
+    function buildLicensePartJson(products, licenseId,licenseInfo) {
         return JSON.stringify({
             "licenseId": licenseId,
-            "licenseeName": "reborn",
-            "assigneeName": "reborn",
+            "licenseeName": licenseInfo.licenseeName,
+            "assigneeName": licenseInfo.assigneeName,
             "assigneeEmail": "",
             "licenseRestriction": "",
             "checkConcurrentUse": false,
@@ -1018,7 +1018,7 @@ fIqVyfK6t0eKJqrvp54XFEtJGR+lf3pBfTdcOI6QFEPKGZKoQz8Ck+BC/WBDtbjc
             }
         })
         let licenseId = genLicenseId()
-        let licensePartJson = buildLicensePartJson(products, licenseId)
+        let licensePartJson = buildLicensePartJson(products, licenseId,licenseInfo)
 
         let privateKey = await window.crypto.subtle.importKey("pkcs8", base64ToArrayBuffer(pem2base64(pemEncodedKey)), {
             name: "RSASSA-PKCS1-v1_5", hash: "SHA-1",
