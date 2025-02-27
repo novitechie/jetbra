@@ -4,6 +4,7 @@ set -e
 
 OS_NAME=$(uname -s)
 JB_PRODUCTS="idea clion phpstorm goland pycharm webstorm webide rider datagrip rubymine appcode dataspell gateway jetbrains_client jetbrainsclient studio devecostudio rustrover"
+JB_PRODUCTS_SNAPS="pycharm-community pycharm-professional rubymine clion rider webstorm intellij-idea-community kotlin pycharm-educational rustrover datagrip goland space intellij-idea-ultimate phpstorm dataspell"
 
 BASE_PATH=$(dirname $(
   cd $(dirname "$0")
@@ -77,6 +78,15 @@ else
   sed -i '/___MY_VMOPTIONS_SHELL_FILE="${HOME}\/\.jetbrains\.vmoptions\.sh"; if /d' "${PROFILE_PATH}" >/dev/null 2>&1
   sed -i '/___MY_VMOPTIONS_SHELL_FILE="${HOME}\/\.jetbrains\.vmoptions\.sh"; if /d' "${BASH_PROFILE_PATH}" >/dev/null 2>&1
   sed -i '/___MY_VMOPTIONS_SHELL_FILE="${HOME}\/\.jetbrains\.vmoptions\.sh"; if /d' "${ZSH_PROFILE_PATH}" >/dev/null 2>&1
+fi
+
+if command -v snap >/dev/null 2>&1; then
+  echo 'snap found. put environment variables.'
+
+  for SNAP in $JB_PRODUCTS_SNAPS; do
+    echo "Processing: ${SNAP}"
+    snap set "${SNAP}" env.___MY_VMOPTIONS_SHELL_FILE="${HOME}/.jetbrains.vmoptions.sh" >/dev/null 2>&1;
+  done
 fi
 
 echo "${EXEC_LINE}" >>"${PROFILE_PATH}"
