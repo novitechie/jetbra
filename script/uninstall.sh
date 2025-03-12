@@ -4,6 +4,7 @@ set -e
 
 OS_NAME=$(uname -s)
 JB_PRODUCTS="idea clion phpstorm goland pycharm webstorm webide rider datagrip rubymine appcode dataspell gateway jetbrains_client jetbrainsclient studio devecostudio rustrover"
+JB_PRODUCTS_SNAPS="pycharm-community pycharm-professional rubymine clion rider webstorm intellij-idea-community kotlin pycharm-educational rustrover datagrip goland space intellij-idea-ultimate phpstorm dataspell"
 
 KDE_ENV_DIR="${HOME}/.config/plasma-workspace/env"
 
@@ -25,6 +26,15 @@ MY_VMOPTIONS_SHELL_NAME="jetbrains.vmoptions.sh"
 MY_VMOPTIONS_SHELL_FILE="${HOME}/.${MY_VMOPTIONS_SHELL_NAME}"
 
 rm -rf "${MY_VMOPTIONS_SHELL_FILE}"
+
+if command -v snap >/dev/null 2>&1; then
+  echo 'snap found. put environment variables.'
+
+  for SNAP in $JB_PRODUCTS_SNAPS; do
+    echo "Processing: ${SNAP}"
+    snap unset "${SNAP}" env.___MY_VMOPTIONS_SHELL_FILE >/dev/null 2>&1;
+  done
+fi
 
 if [ $OS_NAME = "Darwin" ]; then
   for PRD in $JB_PRODUCTS; do
