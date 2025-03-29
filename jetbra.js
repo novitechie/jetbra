@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JetBra
 // @namespace    https://github.com/novice88/jetbra
-// @version      4.0
+// @version      4.1
 // @license MIT
 // @description  Add a button on the plugin homepage and click to get the plugin activation code
 // @author       novice.li
@@ -175,6 +175,10 @@ async function addButton() {
     console.log('pluginId: ' + pluginId);
 
     let pluginDetail = await fetch('https://plugins.jetbrains.com/api/plugins/' + pluginId).then(r => r.json());
+    if (pluginDetail.purchaseInfo === undefined) {
+        console.log('This plugin is not a paid plugin in the market');
+        return;
+    }
 
     const parentElement = await findElementWithRetry('.plugin-header__controls-panel > div:first-child');
 
@@ -187,10 +191,6 @@ async function addButton() {
     parentElement.appendChild(newElement)
 
     newElement.addEventListener('click', async () => {
-        if (pluginDetail.purchaseInfo === undefined) {
-            window.alert('This plugin is not a paid plugin in the market');
-            return;
-        }
         let licenseId = genLicenseId()
         let licensePartJson = buildLicensePartJson(pluginDetail.purchaseInfo.productCode, licenseId)
 
