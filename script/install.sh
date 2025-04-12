@@ -68,18 +68,25 @@ for PRD in $JB_PRODUCTS; do
   fi
 done
 
+# Remove prevoius injected lines if exists
 if [ $OS_NAME = "Darwin" ]; then
-  sed -i '' '/___MY_VMOPTIONS_SHELL_FILE="${HOME}\/\.jetbrains\.vmoptions\.sh"; if /d' "${PROFILE_PATH}" >/dev/null 2>&1
-  sed -i '' '/___MY_VMOPTIONS_SHELL_FILE="${HOME}\/\.jetbrains\.vmoptions\.sh"; if /d' "${BASH_PROFILE_PATH}" >/dev/null 2>&1
-  sed -i '' '/___MY_VMOPTIONS_SHELL_FILE="${HOME}\/\.jetbrains\.vmoptions\.sh"; if /d' "${ZSH_PROFILE_PATH}" >/dev/null 2>&1
+  sed -i '' '/___MY_VMOPTIONS_SHELL_FILE=/d' "${PROFILE_PATH}" >/dev/null 2>&1
+  sed -i '' '/___MY_VMOPTIONS_SHELL_FILE=/d' "${BASH_PROFILE_PATH}" >/dev/null 2>&1
+  sed -i '' '/___MY_VMOPTIONS_SHELL_FILE=/d' "${ZSH_PROFILE_PATH}" >/dev/null 2>&1
   
   echo '</string></array><key>RunAtLoad</key><true/></dict></plist>' >>"${PLIST_PATH}"
 else
-  { sed -i '' -e '$a\' -e '/___MY_VMOPTIONS_SHELL_FILE="${HOME}\/\.jetbrains\.vmoptions\.sh"; if /d' "${PROFILE_PATH}"; } >/dev/null 2>&1
-  { sed -i '' -e '$a\' -e '/___MY_VMOPTIONS_SHELL_FILE="${HOME}\/\.jetbrains\.vmoptions\.sh"; if /d' "${BASH_PROFILE_PATH}"; } >/dev/null 2>&1
-  { sed -i '' -e '$a\' -e '/___MY_VMOPTIONS_SHELL_FILE="${HOME}\/\.jetbrains\.vmoptions\.sh"; if /d' "${ZSH_PROFILE_PATH}"; } >/dev/null 2>&1
+  sed -i '/___MY_VMOPTIONS_SHELL_FILE=/d' "${PROFILE_PATH}" >/dev/null 2>&1
+  sed -i '/___MY_VMOPTIONS_SHELL_FILE=/d' "${BASH_PROFILE_PATH}" >/dev/null 2>&1
+  sed -i '/___MY_VMOPTIONS_SHELL_FILE=/d' "${ZSH_PROFILE_PATH}" >/dev/null 2>&1
 fi
 
+# Inject new lines
+echo "${EXEC_LINE}" >>"${PROFILE_PATH}"
+echo "${EXEC_LINE}" >>"${BASH_PROFILE_PATH}"
+echo "${EXEC_LINE}" >>"${ZSH_PROFILE_PATH}"
+
+# Inject to snap if snap exists
 if command -v snap >/dev/null 2>&1; then
   echo 'snap found. put environment variables.'
 
@@ -88,10 +95,6 @@ if command -v snap >/dev/null 2>&1; then
     snap set "${SNAP}" env.___MY_VMOPTIONS_SHELL_FILE="${HOME}/.jetbrains.vmoptions.sh" >/dev/null 2>&1;
   done
 fi
-
-echo "${EXEC_LINE}" >>"${PROFILE_PATH}"
-echo "${EXEC_LINE}" >>"${BASH_PROFILE_PATH}"
-echo "${EXEC_LINE}" >>"${ZSH_PROFILE_PATH}"
 
 if [ $OS_NAME = "Darwin" ]; then
   echo 'done. the "kill Dock" command can fix the crash issue.'
