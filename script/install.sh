@@ -70,15 +70,19 @@ done
 
 # Remove prevoius injected lines if exists
 if [ $OS_NAME = "Darwin" ]; then
+  set +e
   sed -i '' '/___MY_VMOPTIONS_SHELL_FILE=/d' "${PROFILE_PATH}" >/dev/null 2>&1
   sed -i '' '/___MY_VMOPTIONS_SHELL_FILE=/d' "${BASH_PROFILE_PATH}" >/dev/null 2>&1
   sed -i '' '/___MY_VMOPTIONS_SHELL_FILE=/d' "${ZSH_PROFILE_PATH}" >/dev/null 2>&1
-  
+  set -e
+
   echo '</string></array><key>RunAtLoad</key><true/></dict></plist>' >>"${PLIST_PATH}"
 else
+  set +e
   sed -i '/___MY_VMOPTIONS_SHELL_FILE=/d' "${PROFILE_PATH}" >/dev/null 2>&1
   sed -i '/___MY_VMOPTIONS_SHELL_FILE=/d' "${BASH_PROFILE_PATH}" >/dev/null 2>&1
   sed -i '/___MY_VMOPTIONS_SHELL_FILE=/d' "${ZSH_PROFILE_PATH}" >/dev/null 2>&1
+  set -e
 fi
 
 # Inject new lines
